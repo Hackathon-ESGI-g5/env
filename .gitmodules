@@ -1,0 +1,6 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:Hackathon-ESGI-g5/api.git
+[submodule "front"]
+	path = front
+	url = git@github.com:Hackathon-ESGI-g5/front.git
