@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+  hackathon-app:
+    build: './front/'
+    volumes:
+      - './front/:/home/node/app'
+    working_dir: '/home/node/app'
+    command: 'yarn serve'
+    ports:
+      - '8081:8080'
+  #MySQL Service
+  hackathon_db:
+    image: mysql:5.6
+    volumes:
+      - './dbdata/:/var/lib/mysql'
+    environment:
+      MYSQL_DATABASE: hackathon
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: adonis
+      MYSQL_PASSWORD: adonis
+    ports:
+      - "3306:3306"
+  #NodeJS Service
+  hackathon-node:
+    container_name:  "hackathon-API-nodejs"
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    command: sh ./docker-start.sh
+    depends_on:
+      - 'hackathon_db'
+    environment:
+      - NODE_ENV=dev
+    volumes:
+      - './api/:/home/app:cached'
+    ports:
+      - "3333:3333"
+    networks:
+      - default
+    expose:
+      - "3333"
