@@ -30,3 +30,13 @@ DB_PASSWORD=adonis
 DB_DATABASE=hackaton
 HASH_DRIVER=bcrypt
 ```
+
+Download dependencies for front
+```
+docker-compose run hackathon-app yarn install
+```
+
+Start environement
+```
+docker-compose up -d --build
+```
