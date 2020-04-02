@@ -10,17 +10,17 @@ services:
     ports:
       - '8081:8080'
   #MySQL Service
-  hackathon_db:
-    image: mysql:5.6
-    volumes:
-      - './dbdata/:/var/lib/mysql'
-    environment:
-      MYSQL_DATABASE: hackathon
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: adonis
-      MYSQL_PASSWORD: adonis
-    ports:
-      - "3306:3306"
+#  hackathon_db:
+#image: mysql:5.6
+#volumes:
+#  - './dbdata/:/var/lib/mysql'
+#environment:
+#  MYSQL_DATABASE: hackathon
+#  MYSQL_ROOT_PASSWORD: root
+#  MYSQL_USER: adonis
+#  MYSQL_PASSWORD: adonis
+#ports:
+#  - "3306:3306"
   #NodeJS Service
   hackathon-node:
     container_name:  "hackathon-API-nodejs"
@@ -29,7 +29,7 @@ services:
       dockerfile: Dockerfile
     command: sh ./docker-start.sh
     depends_on:
-      - 'hackathon_db'
+      - 'hackathon_postgresql'
     environment:
       - NODE_ENV=dev
     volumes:
@@ -44,9 +44,9 @@ services:
     image: adminer
     restart: always
     links:
-      - "hackathon_db:db"
+      - "hackathon_postgresql:db"
     depends_on:
-      - hackathon_db
+      - hackathon_postgresql
     ports:
       - 8080:8080
   hackathon-mailhog:
@@ -54,3 +54,15 @@ services:
     ports: 
       - 1025:1025 # smtp server
       - 8025:8025 # web ui
+  hackathon_postgresql:
+    image: 'postgres:10.4'
+    restart: always
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_DB=hackathon
+      - POSTGRES_USER=adonis
+      - POSTGRES_PASSWORD=adonis

@@ -22,13 +22,21 @@ APP_NAME=AdonisJs
 APP_URL=http://${HOST}:${PORT}
 CACHE_VIEWS=false
 APP_KEY=glV1t8egyqVdSALLJDcBYlzFp1GD2aio
-DB_CONNECTION=mysql
-DB_HOST=mysql
-DB_PORT=3306
+
+DB_CONNECTION=pg
+DB_HOST=hackathon_postgresql
+DB_PORT=5432
 DB_USER=adonis
 DB_PASSWORD=adonis
-DB_DATABASE=hackaton
+DB_DATABASE=hackathon
+
 HASH_DRIVER=bcrypt
+
+SMTP_HOST=hackathon-mailhog
+SMTP_PORT=1025
+MAIL_SENDER=contact@safeshop.fr
+
+FRONT_URL=http://safeshop.fr
 ```
 
 Download dependencies for front
